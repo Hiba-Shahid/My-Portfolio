@@ -122,6 +122,7 @@ export default function Hero() {
             </div>
           ))}
         </div>
+        </div>
 
         {/* Hero Image */}
         <div style={{
@@ -144,7 +145,6 @@ export default function Hero() {
             onMouseEnter={e => e.target.style.transform = 'scale(1.05)'}
             onMouseLeave={e => e.target.style.transform = 'scale(1)'}
           />
-        </div>
         </div>
       </div>
     </section>
