@@ -222,6 +222,7 @@ export default function RAGAgent() {
   const [input, setInput] = useState('');
   const [loading, setLoading] = useState(false);
   const [hasNew, setHasNew] = useState(false);
+  const [hovering, setHovering] = useState(false);
   const bottomRef = useRef(null);
   const inputRef = useRef(null);
 
@@ -287,36 +288,74 @@ export default function RAGAgent() {
   return (
     <>
       {/* Floating button */}
-      <button
-        onClick={() => setOpen(o => !o)}
-        aria-label="Open AI assistant"
-        style={{
-          position: 'fixed', bottom: '2rem', right: '2rem', zIndex: 1000,
-          width: 54, height: 54, borderRadius: '50%',
-          background: open ? '#4c1d95' : 'linear-gradient(135deg, #7c3aed, #6d28d9)',
-          border: '1px solid rgba(167,139,250,0.4)',
-          cursor: 'pointer', display: 'flex', alignItems: 'center', justifyContent: 'center',
-          boxShadow: '0 4px 24px rgba(124,58,237,0.45)',
-          transition: 'all 0.25s',
-        }}
-        onMouseEnter={e => e.currentTarget.style.transform = 'scale(1.08)'}
-        onMouseLeave={e => e.currentTarget.style.transform = 'scale(1)'}
+      <div 
+        style={{ position: 'relative' }}
+        onMouseEnter={() => setHovering(true)}
+        onMouseLeave={() => setHovering(false)}
       >
-        {open ? (
-          <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="white" strokeWidth="2.5"><line x1="18" y1="6" x2="6" y2="18"/><line x1="6" y1="6" x2="18" y2="18"/></svg>
-        ) : (
-          <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="white" strokeWidth="1.8">
-            <path d="M21 15a2 2 0 0 1-2 2H7l-4 4V5a2 2 0 0 1 2-2h14a2 2 0 0 1 2 2z"/>
-          </svg>
+        <button
+          onClick={() => setOpen(o => !o)}
+          aria-label="Open AI assistant"
+          style={{
+            position: 'fixed', bottom: '2rem', right: '2rem', zIndex: 1000,
+            width: 54, height: 54, borderRadius: '50%',
+            background: open ? '#4c1d95' : 'linear-gradient(135deg, #7c3aed, #6d28d9)',
+            border: '1px solid rgba(167,139,250,0.4)',
+            cursor: 'pointer', display: 'flex', alignItems: 'center', justifyContent: 'center',
+            boxShadow: '0 4px 24px rgba(124,58,237,0.45)',
+            transition: 'all 0.25s',
+          }}
+          onMouseEnter={(e) => {
+            e.currentTarget.style.transform = 'scale(1.08)';
+          }}
+          onMouseLeave={(e) => {
+            e.currentTarget.style.transform = 'scale(1)';
+          }}
+        >
+          {open ? (
+            <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="white" strokeWidth="2.5"><line x1="18" y1="6" x2="6" y2="18"/><line x1="6" y1="6" x2="18" y2="18"/></svg>
+          ) : (
+            <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="white" strokeWidth="1.8">
+              <path d="M21 15a2 2 0 0 1-2 2H7l-4 4V5a2 2 0 0 1 2-2h14a2 2 0 0 1 2 2z"/>
+            </svg>
+          )}
+          {hasNew && !open && (
+            <span style={{
+              position: 'absolute', top: 2, right: 2,
+              width: 12, height: 12, background: '#34d399',
+              borderRadius: '50%', border: '2px solid #0a0a0f'
+            }} />
+          )}
+        </button>
+
+        {/* Tooltip */}
+        {hovering && !open && (
+          <div 
+            style={{
+              position: 'fixed', bottom: '4.5rem', right: '2rem', zIndex: 1001,
+              background: '#1e1e2e', border: '1px solid rgba(167,139,250,0.3)',
+              borderRadius: 8, padding: '8px 12px',
+              fontSize: '0.8rem', color: '#ddd8f5', fontWeight: 500,
+              whiteSpace: 'nowrap',
+              boxShadow: '0 4px 16px rgba(0,0,0,0.5)',
+              animation: 'tooltipPop 0.15s ease',
+              fontFamily: 'DM Sans, sans-serif',
+            }}
+            onMouseEnter={() => setHovering(true)}
+            onMouseLeave={() => setHovering(false)}
+          >
+            How can I assist you?
+            {/* Arrow pointing down to button */}
+            <div style={{
+              position: 'absolute', bottom: -4, right: 24,
+              width: 0, height: 0,
+              borderLeft: '6px solid transparent',
+              borderRight: '6px solid transparent',
+              borderTop: '6px solid #1e1e2e',
+            }} />
+          </div>
         )}
-        {hasNew && !open && (
-          <span style={{
-            position: 'absolute', top: 2, right: 2,
-            width: 12, height: 12, background: '#34d399',
-            borderRadius: '50%', border: '2px solid #0a0a0f'
-          }} />
-        )}
-      </button>
+      </div>
 
       {/* Chat window */}
       {open && (
@@ -331,6 +370,7 @@ export default function RAGAgent() {
         }}>
           <style>{`
             @keyframes chatIn { from { opacity:0; transform:translateY(12px) scale(0.97); } to { opacity:1; transform:none; } }
+            @keyframes tooltipPop { from { opacity:0; transform:translateY(8px) scale(0.95); } to { opacity:1; transform:none; } }
             .chat-msg-bot { 
               background: #1e1e2e; 
               border: 1px solid rgba(255,255,255,0.07); 
