@@ -158,12 +158,23 @@ export default function RAGAgent() {
     setMessages(updated);
     setLoading(true);
 
+    // Check if API key is available
+    const apiKey = import.meta.env.VITE_MISTRAL_API_KEY;
+    if (!apiKey) {
+      setMessages(prev => [...prev, { 
+        role: 'assistant', 
+        content: "AI assistant is not configured. Please set the VITE_MISTRAL_API_KEY environment variable." 
+      }]);
+      setLoading(false);
+      return;
+    }
+
     try {
       const res = await fetch('https://api.mistral.ai/v1/chat/completions', {
         method: 'POST',
         headers: { 
           'Content-Type': 'application/json',
-          'Authorization': `Bearer ${import.meta.env.VITE_MISTRAL_API_KEY}`
+          'Authorization': `Bearer ${apiKey}`
         },
         body: JSON.stringify({
           model: 'mistral-large-latest',
