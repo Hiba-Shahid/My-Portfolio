@@ -16,7 +16,7 @@ export default function Hero() {
   return (
     <section id="hero" style={{
       minHeight: '100vh', display: 'flex', alignItems: 'center',
-      padding: '7rem 4rem 4rem', position: 'relative', overflow: 'hidden'
+      padding: '6rem 4rem 4rem', position: 'relative', overflow: 'hidden'
     }}>
       {/* Glows */}
       <div style={{
@@ -62,7 +62,7 @@ export default function Hero() {
         {/* Name */}
         <h1 style={{
           fontFamily: 'Syne, sans-serif',
-          fontSize: 'clamp(3.5rem, 8vw, 6rem)',
+          fontSize: 'clamp(3rem, 6vw, 4rem)',
           fontWeight: 800, lineHeight: 0.95,
           letterSpacing: '-0.03em', marginBottom: '1.4rem'
         }}>
@@ -136,13 +136,13 @@ export default function Hero() {
             src="/hero.png" 
             alt="Hiba Shahid" 
             style={{
-              width: '100%',
-              maxWidth: 500,
+              width: '115%',
+              marginBottom: 100,
+              maxWidth: 650,
               height: 'auto',
               borderRadius: '15px',
               transition: 'transform 0.3s ease',
-              border: '1px solid rgba(255,255,255,0.1)',
-              backgroundColor: 'rgba(255,255,255,0.05)'
+              backgroundColor: 'transparent'
             }}
             onMouseEnter={e => e.target.style.transform = 'scale(1.05)'}
             onMouseLeave={e => e.target.style.transform = 'scale(1)'}

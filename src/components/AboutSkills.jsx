@@ -104,24 +104,24 @@ export function Skills() {
       <div style={{ maxWidth: 1200, margin: '0 auto' }}>
         <p className="section-label">Core Skills</p>
         <h2 className="section-title" style={{ marginBottom: '1.5rem' }}>Tech Stack</h2>
-        <div style={{ display: 'grid', gridTemplateColumns: 'repeat(auto-fit, minmax(190px,1fr))', gap: '1rem' }}>
+        <div style={{ display: 'grid', gridTemplateColumns: 'repeat(auto-fit, minmax(280px,1fr))', gap: '1rem' }}>
           {skillGroups.map(g => (
             <div key={g.label} style={{
               background: 'var(--card)', border: '1px solid var(--border)',
               borderRadius: 12, padding: '1.1rem 1.4rem'
             }}>
-              <div style={{ fontSize: '0.68rem', letterSpacing: '0.1em', textTransform: 'uppercase', color: 'var(--accent)', marginBottom: '0.7rem', fontWeight: 500 }}>{g.label}</div>
+              <div style={{ fontSize: '1rem', letterSpacing: '0.1em', textTransform: 'uppercase', color: 'var(--accent)', marginBottom: '0.7rem', fontWeight: 500 }}>{g.label}</div>
               <div style={{ display: 'flex', flexWrap: 'wrap', gap: '0.35rem' }}>
                 {g.core.map(t => (
                   <span key={t} style={{
-                    fontSize: '0.72rem', padding: '0.22rem 0.55rem',
+                    fontSize: '0.90rem', padding: '0.22rem 0.55rem',
                     background: 'rgba(167,139,250,0.1)', border: '1px solid rgba(167,139,250,0.2)',
                     borderRadius: 4, color: 'var(--accent3)'
                   }}>{t}</span>
                 ))}
                 {g.all.map(t => (
                   <span key={t} style={{
-                    fontSize: '0.72rem', padding: '0.22rem 0.55rem',
+                    fontSize: '0.90rem', padding: '0.22rem 0.55rem',
                     background: 'rgba(255,255,255,0.04)', border: '1px solid var(--border)',
                     borderRadius: 4, color: 'var(--muted)'
                   }}>{t}</span>
