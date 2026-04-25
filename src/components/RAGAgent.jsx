@@ -100,12 +100,14 @@ Git, GitHub, Postman, REST APIs, GitHub Actions, Vercel
 
 const SYSTEM_PROMPT = `You are Hiba's AI portfolio assistant. You answer questions about Hiba Shahid — a Full-Stack Developer and AI Engineer — based strictly on the knowledge base provided. 
 
-Be conversational, helpful, and concise. Keep answers under 120 words unless the question genuinely needs more detail. 
-- For project questions, include relevant GitHub/demo links when available.
-- For recruiter questions about salary, be helpful and say it's open to negotiation.
-- If asked something not in the knowledge base, say you don't have that info but suggest contacting Hiba directly at hibashahid678@gmail.com.
-- Never make up information.
-- Speak in third person about Hiba (e.g., "Hiba has..." not "I have...").
+Be conversational, helpful, and concise. Keep answers under 120 words unless the question genuinely needs more detail.
+- Use **bold** for key skills, tech names, or important information
+- Use *italics* for emphasis
+- For project questions, include relevant [GitHub/demo links](url) when available
+- For recruiter questions about salary, be helpful and say it's open to negotiation
+- If asked something not in the knowledge base, say you don't have that info but suggest contacting Hiba directly at hibashahid678@gmail.com
+- Never make up information
+- Speak in third person about Hiba (e.g., "Hiba has..." not "I have...")
 
 Knowledge base:
 ${KNOWLEDGE_BASE}`;
@@ -128,6 +130,89 @@ const BotIcon = () => (
     <rect x="3" y="11" width="18" height="11" rx="2"/><path d="M7 11V7a5 5 0 0 1 10 0v4"/><circle cx="12" cy="5" r="1" fill="currentColor"/>
   </svg>
 );
+
+// Parse markdown-like formatting in text
+const parseMarkdown = (text) => {
+  if (!text || typeof text !== 'string') return text;
+  
+  const parts = [];
+  let lastIndex = 0;
+  
+  // Match **bold**, *italic*, [link](url), and code blocks
+  const regex = /\*\*(.+?)\*\*|\*(.+?)\*|\[(.+?)\]\((.+?)\)|`(.+?)`/g;
+  let match;
+  
+  while ((match = regex.exec(text)) !== null) {
+    // Add text before the match
+    if (match.index > lastIndex) {
+      const segment = text.substring(lastIndex, match.index);
+      // Handle line breaks in segments
+      segment.split('\n').forEach((line, idx, arr) => {
+        if (line) parts.push(line);
+        if (idx < arr.length - 1) parts.push(<br key={`br-${parts.length}`} />);
+      });
+    }
+    
+    if (match[1]) {
+      // **bold**
+      parts.push(
+        <strong key={`bold-${parts.length}`} style={{ color: '#f0eeff', fontWeight: 600 }}>
+          {match[1]}
+        </strong>
+      );
+    } else if (match[2]) {
+      // *italic*
+      parts.push(
+        <em key={`italic-${parts.length}`} style={{ color: '#ddd8f5' }}>
+          {match[2]}
+        </em>
+      );
+    } else if (match[3]) {
+      // [link](url)
+      parts.push(
+        <a 
+          key={`link-${parts.length}`}
+          href={match[4]} 
+          target="_blank" 
+          rel="noopener noreferrer"
+          style={{ color: '#a78bfa', textDecoration: 'underline', fontWeight: 500, cursor: 'pointer' }}
+        >
+          {match[3]}
+        </a>
+      );
+    } else if (match[5]) {
+      // `code`
+      parts.push(
+        <code 
+          key={`code-${parts.length}`}
+          style={{ 
+            background: 'rgba(0,0,0,0.3)', 
+            padding: '2px 6px', 
+            borderRadius: 4, 
+            fontFamily: 'monospace',
+            color: '#c4b5fd',
+            fontSize: '0.85em'
+          }}
+        >
+          {match[5]}
+        </code>
+      );
+    }
+    
+    lastIndex = regex.lastIndex;
+  }
+  
+  // Add remaining text with line breaks
+  if (lastIndex < text.length) {
+    const remaining = text.substring(lastIndex);
+    remaining.split('\n').forEach((line, idx, arr) => {
+      if (line) parts.push(line);
+      if (idx < arr.length - 1) parts.push(<br key={`br-${parts.length}`} />);
+    });
+  }
+  
+  return parts.length > 0 ? parts : text;
+};
 
 export default function RAGAgent() {
   const [open, setOpen] = useState(false);
@@ -246,8 +331,35 @@ export default function RAGAgent() {
         }}>
           <style>{`
             @keyframes chatIn { from { opacity:0; transform:translateY(12px) scale(0.97); } to { opacity:1; transform:none; } }
-            .chat-msg-bot { background: #1e1e2e; border: 1px solid rgba(255,255,255,0.07); border-radius: 12px 12px 12px 3px; padding: 10px 13px; font-size: 0.84rem; line-height: 1.65; color: #ddd8f5; max-width: 88%; word-break: break-word; }
-            .chat-msg-user { background: #5b21b6; border-radius: 12px 12px 3px 12px; padding: 10px 13px; font-size: 0.84rem; line-height: 1.65; color: #ede9fe; max-width: 88%; word-break: break-word; margin-left: auto; }
+            .chat-msg-bot { 
+              background: #1e1e2e; 
+              border: 1px solid rgba(255,255,255,0.07); 
+              border-radius: 12px 12px 12px 3px; 
+              padding: 11px 13px; 
+              font-size: 0.84rem; 
+              line-height: 1.68; 
+              color: #ddd8f5; 
+              max-width: 88%; 
+              word-break: break-word;
+              word-wrap: break-word;
+              overflow-wrap: break-word;
+            }
+            .chat-msg-bot strong { font-weight: 600; color: #f0eeff; }
+            .chat-msg-bot em { font-style: italic; }
+            .chat-msg-bot a { color: #a78bfa; text-decoration: underline; font-weight: 500; }
+            .chat-msg-user { 
+              background: #5b21b6; 
+              border-radius: 12px 12px 3px 12px; 
+              padding: 11px 13px; 
+              font-size: 0.84rem; 
+              line-height: 1.68; 
+              color: #ede9fe; 
+              max-width: 88%; 
+              word-break: break-word;
+              word-wrap: break-word;
+              overflow-wrap: break-word;
+              margin-left: auto; 
+            }
             .chat-input:focus { outline: none; border-color: rgba(167,139,250,0.5) !important; }
             .chat-input::placeholder { color: #5a5970; }
             .suggest-btn:hover { background: rgba(167,139,250,0.12) !important; border-color: rgba(167,139,250,0.3) !important; }
@@ -288,7 +400,7 @@ export default function RAGAgent() {
             {messages.map((m, i) => (
               <div key={i} style={{ display: 'flex', justifyContent: m.role === 'user' ? 'flex-end' : 'flex-start' }}>
                 <div className={m.role === 'user' ? 'chat-msg-user' : 'chat-msg-bot'}>
-                  {m.content}
+                  {m.role === 'assistant' ? parseMarkdown(m.content) : m.content}
                 </div>
               </div>
             ))}
