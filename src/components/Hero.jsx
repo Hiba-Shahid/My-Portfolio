@@ -140,10 +140,19 @@ export default function Hero() {
               maxWidth: 500,
               height: 'auto',
               borderRadius: '15px',
-              transition: 'transform 0.3s ease'
+              transition: 'transform 0.3s ease',
+              border: '1px solid rgba(255,255,255,0.1)',
+              backgroundColor: 'rgba(255,255,255,0.05)'
             }}
             onMouseEnter={e => e.target.style.transform = 'scale(1.05)'}
             onMouseLeave={e => e.target.style.transform = 'scale(1)'}
+            onError={(e) => {
+              console.error('Image failed to load:', e);
+              e.target.src = 'data:image/svg+xml;base64,PHN2ZyB3aWR0aD0iNTAwIiBoZWlnaHQ9IjMwMCIgeG1sbnM9Imh0dHA6Ly93d3cudzMub3JnLzIwMDAvc3ZnIj48cmVjdCB3aWR0aD0iNTAwIiBoZWlnaHQ9IjMwMCIgZmlsbD0iIzJhMmEzYSIgcng9IjE1Ii8+PHRleHQgeD0iMjUwIiB5PSIxNTAiIGZvbnQtZmFtaWx5PSJBcmlhbCIgZm9udC1zaXplPSIxOCIgZmlsbD0iIzg4OCIgdGV4dC1hbmNob3I9Im1pZGRsZSIgZHk9Ii4zZW0iPkhlcm8gSW1hZ2U8L3RleHQ+PC9zdmc+';
+            }}
+            onLoad={(e) => {
+              console.log('Image loaded successfully');
+            }}
           />
         </div>
       </div>
