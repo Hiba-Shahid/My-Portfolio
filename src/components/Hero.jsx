@@ -10,6 +10,9 @@ const stats = [
 ];
 
 export default function Hero() {
+  // Responsive grid for mobile
+  const isMobile = window.innerWidth <= 768;
+  
   return (
     <section id="hero" style={{
       minHeight: '100vh', display: 'flex', alignItems: 'center',
@@ -29,7 +32,57 @@ export default function Hero() {
         pointerEvents: 'none'
       }} />
 
-      <div style={{ maxWidth: 780, position: 'relative', zIndex: 1 }} className="fade-up">
+      <div style={{ 
+        display: 'grid', 
+        gridTemplateColumns: isMobile ? '1fr' : '1fr 1.2fr', 
+        gap: isMobile ? '2rem' : '4rem', 
+        alignItems: 'center',
+        maxWidth: 1200, 
+        width: '100%',
+        position: 'relative', 
+        zIndex: 1 
+      }} className="fade-up">
+        
+        {/* Hero Image */}
+        <div style={{
+          display: 'flex',
+          justifyContent: isMobile ? 'center' : 'flex-end',
+          alignItems: 'center',
+          position: 'relative',
+          order: isMobile ? 2 : 1
+        }}>
+          <img 
+            src="/hero.png" 
+            alt="Hiba Shahid" 
+            style={{
+              width: '100%',
+              maxWidth: 400,
+              height: 'auto',
+              borderRadius: '20px',
+              boxShadow: '0 20px 60px rgba(124,58,237,0.3)',
+              border: '1px solid rgba(167,139,250,0.2)',
+              transition: 'transform 0.3s ease'
+            }}
+            onMouseEnter={e => e.target.style.transform = 'scale(1.05)'}
+            onMouseLeave={e => e.target.style.transform = 'scale(1)'}
+          />
+          {/* Decorative circle behind image */}
+          <div style={{
+            position: 'absolute',
+            top: '50%',
+            left: '50%',
+            transform: 'translate(-50%, -50%)',
+            width: '120%',
+            height: '120%',
+            background: 'linear-gradient(135deg, rgba(124,58,237,0.1) 0%, rgba(45,212,191,0.05) 100%)',
+            borderRadius: '30%',
+            zIndex: -1,
+            filter: 'blur(40px)'
+          }} />
+        </div>
+
+        {/* Content */}
+        <div style={{ order: isMobile ? 1 : 2 }}>
         {/* Badge */}
         <div style={{
           display: 'inline-flex', alignItems: 'center', gap: '0.5rem',
@@ -106,6 +159,7 @@ export default function Hero() {
               <div style={{ fontSize: '0.78rem', color: 'var(--muted)', marginTop: '0.3rem', letterSpacing: '0.04em' }}>{s.label}</div>
             </div>
           ))}
+        </div>
         </div>
       </div>
     </section>
