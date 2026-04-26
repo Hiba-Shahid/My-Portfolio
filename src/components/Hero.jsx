@@ -12,11 +12,13 @@ const stats = [
 export default function Hero() {
   // Responsive grid for mobile
   const isMobile = window.innerWidth <= 768;
+  const isSmallMobile = window.innerWidth <= 480;
   
   return (
     <section id="hero" style={{
       minHeight: '100vh', display: 'flex', alignItems: 'center',
-      padding: '6rem 4rem 4rem', position: 'relative', overflow: 'hidden'
+      padding: isSmallMobile ? '5rem 1rem 2rem' : isMobile ? '5.5rem 1.5rem 3rem' : '6rem 4rem 4rem', 
+      position: 'relative', overflow: 'hidden'
     }}>
       {/* Glows */}
       <div style={{
@@ -35,7 +37,7 @@ export default function Hero() {
       <div style={{ 
         display: 'grid', 
         gridTemplateColumns: isMobile ? '1fr' : '1.2fr 1fr', 
-        gap: isMobile ? '2rem' : '4rem', 
+        gap: isSmallMobile ? '1.5rem' : isMobile ? '2rem' : '4rem', 
         alignItems: 'center',
         maxWidth: 1200, 
         width: '100%',
@@ -49,8 +51,9 @@ export default function Hero() {
         <div style={{
           display: 'inline-flex', alignItems: 'center', gap: '0.5rem',
           background: 'rgba(167,139,250,0.1)', border: '1px solid rgba(167,139,250,0.2)',
-          color: 'var(--accent3)', fontSize: '0.78rem', padding: '0.35rem 0.9rem',
-          borderRadius: 20, marginBottom: '1.8rem', letterSpacing: '0.05em'
+          color: 'var(--accent3)', fontSize: isSmallMobile ? '0.7rem' : '0.78rem', 
+          padding: isSmallMobile ? '0.3rem 0.7rem' : '0.35rem 0.9rem',
+          borderRadius: 20, marginBottom: isSmallMobile ? '1.2rem' : '1.8rem', letterSpacing: '0.05em'
         }}>
           <span style={{
             width: 6, height: 6, background: 'var(--green)', borderRadius: '50%',
@@ -62,9 +65,9 @@ export default function Hero() {
         {/* Name */}
         <h1 style={{
           fontFamily: 'Syne, sans-serif',
-          fontSize: 'clamp(3rem, 6vw, 4rem)',
+          fontSize: isSmallMobile ? 'clamp(2rem, 6vw, 3rem)' : 'clamp(3rem, 6vw, 4rem)',
           fontWeight: 800, lineHeight: 0.95,
-          letterSpacing: '-0.03em', marginBottom: '1.4rem'
+          letterSpacing: '-0.03em', marginBottom: isSmallMobile ? '1rem' : '1.4rem'
         }}>
           <span style={{ display: 'block', color: 'var(--text)' }}>Hiba</span>
           <span style={{ display: 'block', color: 'var(--accent)' }}>Shahid.</span>
@@ -72,8 +75,9 @@ export default function Hero() {
 
         {/* Description */}
         <p style={{
-          fontSize: '1.08rem', color: 'var(--muted)', maxWidth: 560,
-          lineHeight: 1.85, marginBottom: '2.4rem', fontWeight: 300
+          fontSize: isSmallMobile ? '0.9rem' : '1.08rem', 
+          color: 'var(--muted)', maxWidth: 560,
+          lineHeight: 1.85, marginBottom: isSmallMobile ? '1.5rem' : '2.4rem', fontWeight: 300
         }}>
           <strong style={{ color: 'var(--text)', fontWeight: 500 }}>Full-Stack Developer &amp; AI Engineer</strong> with 3+ years building
           production web apps with <strong style={{ color: 'var(--text)', fontWeight: 500 }}>React &amp; Django</strong>.
@@ -81,7 +85,7 @@ export default function Hero() {
         </p>
 
         {/* Buttons */}
-        <div style={{ display: 'flex', gap: '1rem', flexWrap: 'wrap', marginBottom: '3rem' }}>
+        <div style={{ display: 'flex', gap: isSmallMobile ? '0.5rem' : '1rem', flexWrap: 'wrap', marginBottom: isSmallMobile ? '2rem' : '3rem' }}>
           <a href="#projects" className="btn-primary">
             <svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2.5">
               <path d="M9 18l6-6-6-6"/>
@@ -112,13 +116,13 @@ export default function Hero() {
 
         {/* Stats */}
         <div style={{
-          display: 'flex', gap: '3rem', flexWrap: 'wrap',
-          borderTop: '1px solid var(--border)', paddingTop: '2.5rem'
+          display: 'flex', gap: isSmallMobile ? '1.5rem' : '3rem', flexWrap: 'wrap',
+          borderTop: '1px solid var(--border)', paddingTop: isSmallMobile ? '1.5rem' : '2.5rem'
         }}>
           {stats.map(s => (
             <div key={s.label}>
-              <div style={{ fontFamily: 'Syne, sans-serif', fontSize: '2rem', fontWeight: 700, color: 'var(--accent3)', lineHeight: 1 }}>{s.num}</div>
-              <div style={{ fontSize: '0.78rem', color: 'var(--muted)', marginTop: '0.3rem', letterSpacing: '0.04em' }}>{s.label}</div>
+              <div style={{ fontFamily: 'Syne, sans-serif', fontSize: isSmallMobile ? '1.5rem' : '2rem', fontWeight: 700, color: 'var(--accent3)', lineHeight: 1 }}>{s.num}</div>
+              <div style={{ fontSize: isSmallMobile ? '0.7rem' : '0.78rem', color: 'var(--muted)', marginTop: '0.3rem', letterSpacing: '0.04em' }}>{s.label}</div>
             </div>
           ))}
         </div>
@@ -136,8 +140,8 @@ export default function Hero() {
             src="/hero.png" 
             alt="Hiba Shahid" 
             style={{
-              width: '115%',
-              marginBottom: 100,
+              width: isSmallMobile ? '90%' : isMobile ? '100%' : '115%',
+              marginBottom: isSmallMobile ? 50 : 100,
               maxWidth: 650,
               height: 'auto',
               borderRadius: '15px',

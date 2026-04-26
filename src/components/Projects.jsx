@@ -182,16 +182,17 @@ function ProjectCard({ p }) {
 export default function Projects() {
   const [active, setActive] = useState('all');
   const filtered = active === 'all' ? projects : projects.filter(p => p.cat === active);
+  const isMobile = window.innerWidth <= 768;
 
   return (
-    <section id="projects" style={{ padding: '6rem 4rem', maxWidth: 1200, margin: '0 auto' }}>
+    <section id="projects" style={{ padding: isMobile ? '4rem 1.5rem' : '6rem 4rem', maxWidth: 1200, margin: '0 auto' }}>
       <p className="section-label">Work</p>
       <h2 className="section-title">Projects</h2>
 
-      <div style={{ display: 'flex', gap: '0.5rem', flexWrap: 'wrap', marginBottom: '2.5rem' }}>
+      <div style={{ display: 'flex', gap: isMobile ? '0.3rem' : '0.5rem', flexWrap: 'wrap', marginBottom: '2.5rem' }}>
         {tabs.map(t => (
           <button key={t.key} onClick={() => setActive(t.key)} style={{
-            padding: '0.45rem 1.1rem', borderRadius: 6, fontSize: '0.83rem',
+            padding: isMobile ? '0.4rem 0.8rem' : '0.45rem 1.1rem', borderRadius: 6, fontSize: isMobile ? '0.75rem' : '0.83rem',
             background: active === t.key ? 'rgba(124,58,237,0.15)' : 'var(--card)',
             border: `1px solid ${active === t.key ? 'rgba(167,139,250,0.3)' : 'var(--border)'}`,
             color: active === t.key ? 'var(--accent3)' : 'var(--muted)',
@@ -200,7 +201,7 @@ export default function Projects() {
         ))}
       </div>
 
-      <div style={{ display: 'grid', gridTemplateColumns: 'repeat(auto-fill, minmax(320px, 1fr))', gap: '1.3rem' }}>
+      <div style={{ display: 'grid', gridTemplateColumns: isMobile ? '1fr' : 'repeat(auto-fill, minmax(320px, 1fr))', gap: isMobile ? '1rem' : '1.3rem' }}>
         {filtered.map(p => <ProjectCard key={p.name} p={p} />)}
       </div>
     </section>

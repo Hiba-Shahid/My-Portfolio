@@ -104,3 +104,53 @@ ul { list-style: none; }
 .fade-up {
   animation: fadeUp 0.65s ease forwards;
 }
+
+/* ===== MOBILE RESPONSIVE STYLES ===== */
+
+/* Phones (< 480px) */
+@media (max-width: 479px) {
+  body { font-size: 14px; }
+  
+  .section-label {
+    font-size: 0.65rem;
+    margin-bottom: 0.6rem;
+  }
+  
+  .section-title {
+    font-size: clamp(1.5rem, 5vw, 2rem);
+    margin-bottom: 1.8rem;
+  }
+  
+  .btn-primary, .btn-secondary {
+    padding: 0.6rem 1rem;
+    font-size: 0.8rem;
+    gap: 0.3rem;
+  }
+  
+  .btn-primary svg, .btn-secondary svg {
+    width: 11px;
+    height: 11px;
+  }
+}
+
+/* Tablets & Small Devices (480px - 768px) */
+@media (max-width: 768px) {
+  body { font-size: 15px; }
+  
+  .section-title {
+    font-size: clamp(1.8rem, 5vw, 2.4rem);
+    margin-bottom: 2rem;
+  }
+  
+  .btn-primary, .btn-secondary {
+    padding: 0.65rem 1.2rem;
+    font-size: 0.85rem;
+  }
+}
+
+/* Small screens general improvements */
+@media (max-width: 1024px) {
+  .section-title {
+    margin-bottom: 2rem;
+  }
+}

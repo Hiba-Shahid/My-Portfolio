@@ -37,9 +37,11 @@ const jobs = [
 ];
 
 export function Experience() {
+  const isMobile = window.innerWidth <= 768;
+  
   return (
     <section id="experience" style={{
-      padding: '6rem 4rem',
+      padding: isMobile ? '4rem 1.5rem' : '6rem 4rem',
       background: 'var(--bg2)', borderTop: '1px solid var(--border)'
     }}>
       <div style={{ maxWidth: 1200, margin: '0 auto' }}>
@@ -49,12 +51,13 @@ export function Experience() {
         <div style={{ display: 'flex', flexDirection: 'column', gap: 0 }}>
           {jobs.map((j, i) => (
             <div key={j.role} style={{
-              display: 'grid', gridTemplateColumns: '180px 1fr',
-              gap: '2rem', position: 'relative',
-              paddingBottom: i < jobs.length - 1 ? '2.5rem' : 0
+              display: 'grid', gridTemplateColumns: isMobile ? '1fr' : '180px 1fr',
+              gap: isMobile ? '1rem' : '2rem', position: 'relative',
+              paddingBottom: i < jobs.length - 1 ? (isMobile ? '1.5rem' : '2.5rem') : 0,
+              paddingLeft: isMobile ? 0 : 0
             }}>
               {/* Line */}
-              {i < jobs.length - 1 && (
+              {i < jobs.length - 1 && !isMobile && (
                 <div style={{
                   position: 'absolute', left: 180, top: 8, bottom: 0, width: 1,
                   background: 'linear-gradient(to bottom, var(--accent2), transparent)',
@@ -62,22 +65,25 @@ export function Experience() {
                 }} />
               )}
               {/* Dot */}
-              <div style={{
-                width: 10, height: 10, borderRadius: '50%',
-                background: 'var(--accent2)', border: '2px solid var(--accent)',
-                position: 'absolute', left: 180, top: 6,
-                transform: 'translateX(calc(-50% + 24px))',
-                boxShadow: '0 0 12px rgba(124,58,237,0.5)'
-              }} />
+              {!isMobile && (
+                <div style={{
+                  width: 10, height: 10, borderRadius: '50%',
+                  background: 'var(--accent2)', border: '2px solid var(--accent)',
+                  position: 'absolute', left: 180, top: 6,
+                  transform: 'translateX(calc(-50% + 24px))',
+                  boxShadow: '0 0 12px rgba(124,58,237,0.5)'
+                }} />
+              )}
 
-              <div style={{ fontSize: '0.76rem', color: 'var(--muted2)', textAlign: 'right', paddingTop: '0.2rem' }}>{j.date}</div>
+              {!isMobile && <div style={{ fontSize: '0.76rem', color: 'var(--muted2)', textAlign: 'right', paddingTop: '0.2rem' }}>{j.date}</div>}
 
-              <div style={{ paddingLeft: '2.5rem' }}>
-                <div style={{ fontSize: '0.73rem', color: 'var(--accent)', letterSpacing: '0.05em', marginBottom: '0.25rem', fontWeight: 500 }}>{j.company}</div>
-                <div style={{ fontFamily: 'Syne, sans-serif', fontSize: '1.02rem', fontWeight: 700, marginBottom: '0.6rem' }}>{j.role}</div>
+              <div style={{ paddingLeft: isMobile ? 0 : '2.5rem' }}>
+                {isMobile && <div style={{ fontSize: '0.7rem', color: 'var(--muted2)', marginBottom: '0.4rem' }}>{j.date}</div>}
+                <div style={{ fontSize: isMobile ? '0.7rem' : '0.73rem', color: 'var(--accent)', letterSpacing: '0.05em', marginBottom: '0.25rem', fontWeight: 500 }}>{j.company}</div>
+                <div style={{ fontFamily: 'Syne, sans-serif', fontSize: isMobile ? '0.95rem' : '1.02rem', fontWeight: 700, marginBottom: '0.6rem' }}>{j.role}</div>
                 <ul style={{ listStyle: 'none', display: 'flex', flexDirection: 'column', gap: '0.35rem' }}>
                   {j.bullets.map((b, bi) => (
-                    <li key={bi} style={{ fontSize: '0.84rem', color: 'var(--muted)', paddingLeft: '1rem', position: 'relative' }}>
+                    <li key={bi} style={{ fontSize: isMobile ? '0.78rem' : '0.84rem', color: 'var(--muted)', paddingLeft: '1rem', position: 'relative' }}>
                       <span style={{ position: 'absolute', left: 0, color: 'var(--accent2)', fontSize: '0.7rem' }}>→</span>
                       <span dangerouslySetInnerHTML={{ __html: b.replace(/<b>/g, '<strong style="color:var(--text);font-weight:500">').replace(/<\/b>/g, '</strong>') }} />
                     </li>
@@ -106,22 +112,24 @@ const GithubIcon = ({ size = 16 }) => (
 );
 
 export function Github() {
+  const isMobile = window.innerWidth <= 768;
+  
   return (
-    <section id="github" style={{ padding: '6rem 4rem', maxWidth: 1200, margin: '0 auto' }}>
+    <section id="github" style={{ padding: isMobile ? '4rem 1.5rem' : '6rem 4rem', maxWidth: 1200, margin: '0 auto' }}>
       <div style={{
         background: 'var(--card)', border: '1px solid var(--border)',
-        borderRadius: 20, padding: '3rem',
-        display: 'grid', gridTemplateColumns: '1fr 1fr', gap: '3rem', alignItems: 'center'
+        borderRadius: 20, padding: isMobile ? '1.5rem' : '3rem',
+        display: 'grid', gridTemplateColumns: isMobile ? '1fr' : '1fr 1fr', gap: isMobile ? '2rem' : '3rem', alignItems: 'center'
       }}>
         <div>
-          <h3 style={{ fontFamily: 'Syne, sans-serif', fontSize: '1.6rem', fontWeight: 700, marginBottom: '0.8rem' }}>Open Source &amp; GitHub</h3>
-          <p style={{ color: 'var(--muted)', fontSize: '0.95rem', lineHeight: 1.8, marginBottom: '1.5rem' }}>
+          <h3 style={{ fontFamily: 'Syne, sans-serif', fontSize: isMobile ? '1.3rem' : '1.6rem', fontWeight: 700, marginBottom: '0.8rem' }}>Open Source &amp; GitHub</h3>
+          <p style={{ color: 'var(--muted)', fontSize: isMobile ? '0.88rem' : '0.95rem', lineHeight: 1.8, marginBottom: '1.5rem' }}>
             All my projects are version-controlled and publicly available. From ML experiments to full production apps — the code tells the full story.
           </p>
           <a href="https://github.com/Hiba-Shahid" target="_blank" rel="noreferrer" style={{
             display: 'inline-flex', alignItems: 'center', gap: '0.5rem',
-            color: 'var(--accent3)', textDecoration: 'none', fontSize: '0.9rem',
-            background: 'rgba(167,139,250,0.08)', padding: '0.6rem 1.2rem',
+            color: 'var(--accent3)', textDecoration: 'none', fontSize: isMobile ? '0.82rem' : '0.9rem',
+            background: 'rgba(167,139,250,0.08)', padding: isMobile ? '0.5rem 1rem' : '0.6rem 1.2rem',
             borderRadius: 8, border: '1px solid rgba(167,139,250,0.2)',
             transition: 'background 0.2s'
           }}
@@ -135,11 +143,11 @@ export function Github() {
           {githubStats.map(s => (
             <div key={s.label} style={{
               background: 'var(--bg3)', border: '1px solid var(--border)',
-              borderRadius: 10, padding: '0.9rem 1.1rem',
+              borderRadius: 10, padding: isMobile ? '0.7rem 0.9rem' : '0.9rem 1.1rem',
               display: 'flex', alignItems: 'center', justifyContent: 'space-between'
             }}>
-              <span style={{ fontSize: '0.8rem', color: 'var(--muted)' }}>{s.label}</span>
-              <span style={{ fontFamily: 'Syne, sans-serif', fontSize: '1rem', fontWeight: 700, color: 'var(--accent3)' }}>{s.val}</span>
+              <span style={{ fontSize: isMobile ? '0.75rem' : '0.8rem', color: 'var(--muted)' }}>{s.label}</span>
+              <span style={{ fontFamily: 'Syne, sans-serif', fontSize: isMobile ? '0.9rem' : '1rem', fontWeight: 700, color: 'var(--accent3)' }}>{s.val}</span>
             </div>
           ))}
         </div>
@@ -168,30 +176,32 @@ const contactLinks = [
 ];
 
 export function Contact() {
+  const isMobile = window.innerWidth <= 768;
+  
   return (
     <section id="contact" style={{
-      padding: '6rem 4rem',
+      padding: isMobile ? '4rem 1.5rem' : '6rem 4rem',
       background: 'var(--bg2)', borderTop: '1px solid var(--border)'
     }}>
       <div style={{ maxWidth: 900, margin: '0 auto', textAlign: 'center' }}>
         <p className="section-label">Get In Touch</p>
         <h2 className="section-title">Let's work together.</h2>
-        <p style={{ color: 'var(--muted)', fontSize: '1rem', marginBottom: '2.8rem', marginTop: '-1.5rem' }}>
+        <p style={{ color: 'var(--muted)', fontSize: isMobile ? '0.9rem' : '1rem', marginBottom: '2.8rem', marginTop: '-1.5rem' }}>
           I'm open to full-stack and AI roles — remote, EST-aligned, immediate joiner.
         </p>
-        <div style={{ display: 'flex', justifyContent: 'center', gap: '1rem', flexWrap: 'wrap', marginBottom: '1.5rem' }}>
+        <div style={{ display: 'flex', justifyContent: 'center', gap: isMobile ? '0.6rem' : '1rem', flexWrap: 'wrap', marginBottom: '1.5rem' }}>
           {contactLinks.map(c => (
             <a key={c.label} href={c.href} target={c.href.startsWith('http') ? '_blank' : undefined} rel="noreferrer"
               style={{
                 display: 'inline-flex', alignItems: 'center', gap: '0.55rem',
-                padding: '0.75rem 1.4rem', borderRadius: 10, textDecoration: 'none',
-                fontSize: '0.88rem', border: '1px solid var(--border)',
+                padding: isMobile ? '0.6rem 0.9rem' : '0.75rem 1.4rem', borderRadius: 10, textDecoration: 'none',
+                fontSize: isMobile ? '0.78rem' : '0.88rem', border: '1px solid var(--border)',
                 background: 'var(--card)', color: 'var(--text)', transition: 'all 0.2s'
               }}
               onMouseEnter={e => { e.currentTarget.style.borderColor = 'var(--accent)'; e.currentTarget.style.color = 'var(--accent3)'; e.currentTarget.style.transform = 'translateY(-2px)'; }}
               onMouseLeave={e => { e.currentTarget.style.borderColor = 'var(--border)'; e.currentTarget.style.color = 'var(--text)'; e.currentTarget.style.transform = 'none'; }}
             >
-              {c.icon}{c.label}
+              {c.icon}{isMobile ? '' : c.label}
             </a>
           ))}
         </div>
@@ -199,8 +209,8 @@ export function Contact() {
         <a href={RESUME_URL} target="_blank" rel="noreferrer"
           style={{
             display: 'inline-flex', alignItems: 'center', gap: '0.6rem',
-            padding: '0.8rem 2rem', borderRadius: 10, textDecoration: 'none',
-            fontSize: '0.92rem', border: '1px solid rgba(167,139,250,0.3)',
+            padding: isMobile ? '0.7rem 1.2rem' : '0.8rem 2rem', borderRadius: 10, textDecoration: 'none',
+            fontSize: isMobile ? '0.82rem' : '0.92rem', border: '1px solid rgba(167,139,250,0.3)',
             background: 'rgba(124,58,237,0.12)', color: 'var(--accent3)',
             transition: 'all 0.2s', marginTop: '0.5rem'
           }}
@@ -212,7 +222,7 @@ export function Contact() {
             <polyline points="7 10 12 15 17 10"/>
             <line x1="12" y1="15" x2="12" y2="3"/>
           </svg>
-          Download Resume (PDF)
+          Download Resume {isMobile ? '' : '(PDF)'}
         </a>
       </div>
     </section>
@@ -220,10 +230,12 @@ export function Contact() {
 }
 
 export function Footer() {
+  const isMobile = window.innerWidth <= 768;
+  
   return (
     <footer style={{
-      padding: '1.8rem 4rem', textAlign: 'center',
-      fontSize: '0.78rem', color: 'var(--muted2)',
+      padding: isMobile ? '1.2rem 1.5rem' : '1.8rem 4rem', textAlign: 'center',
+      fontSize: isMobile ? '0.7rem' : '0.78rem', color: 'var(--muted2)',
       borderTop: '1px solid var(--border)'
     }}>
       Built by Hiba Shahid · 2025 · Full-Stack &amp; AI Developer
