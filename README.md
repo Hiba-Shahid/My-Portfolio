@@ -1,128 +1,87 @@
-# Hiba Shahid — Portfolio (React + Vite + AI)
+# Hiba Shahid Portfolio (React + Vite)
 
-A modern, production-grade personal portfolio built with React 18, Vite, and an AI-powered RAG (Retrieval-Augmented Generation) assistant.
+Personal portfolio website built with React and Vite, featuring a section-based single-page layout and an AI chat assistant powered by Mistral.
 
-## ✨ Features
+## Overview
 
-- 🚀 **Modern Tech Stack**: React 18 + Vite for lightning-fast development
-- 🤖 **AI Assistant**: Interactive RAG agent powered by Mistral AI for instant portfolio queries
-- 📱 **Fully Responsive**: Optimized for all devices and screen sizes
-- ⚡ **Performance**: Optimized with lazy loading and smooth animations
-- 📄 **Resume Integration**: One-click resume viewing in new tabs
-- 🎨 **Modern Design**: Clean, professional UI with smooth animations
+This project is a frontend-only portfolio application. It renders all portfolio content from local component data and includes:
 
-## 🚀 Quick Start
+- Sticky responsive navigation
+- Hero, About, Skills, Projects, Experience, GitHub, and Contact sections
+- Project category filtering
+- Floating AI assistant with suggested prompts
+- Resume download/view links
 
-```bash
-# Clone the repository
-git clone https://github.com/Hiba-Shahid/My-Portfolio.git
-cd My-Portfolio
+## Tech Stack
 
-# Install dependencies
-npm install
+- React 18
+- Vite 5
+- Plain CSS (`src/index.css`) and inline component styles
+- Mistral Chat Completions API (client-side request in `RAGAgent.jsx`)
 
-# Create .env file with your Mistral API key
-echo "VITE_MISTRAL_API_KEY=your_api_key_here" > .env
+## Project Structure
 
-# Start development server
-npm run dev       # Start dev server at http://localhost:3000
-
-# Build for production
-npm run build     # Build for production → dist/
-npm run preview   # Preview production build
-```
-
-## 📁 Project Structure
-
-```
+```text
 src/
   components/
-    Navbar.jsx          # Sticky navigation with scroll effect + resume download
-    Hero.jsx            # Landing section with animated stats
-    AboutSkills.jsx     # Tech stack, About, and Skills sections
-    Projects.jsx        # Filterable project cards with live demos
-    Sections.jsx        # Experience timeline, GitHub stats, Contact, Footer
-    RAGAgent.jsx        # AI-powered chat assistant (Mistral AI integration)
-  App.jsx               # Root component
-  index.jsx             # Application entry point
-  index.css             # Global styles & CSS variables
+    Navbar.jsx        # Header + nav links + resume CTA
+    Hero.jsx          # Intro section and hero image
+    AboutSkills.jsx   # Tech strip, About, Skills
+    Projects.jsx      # Filterable project cards
+    Sections.jsx      # Experience, GitHub, Contact, Footer
+    RAGAgent.jsx      # Floating AI assistant
+  App.jsx             # Section composition
+  index.jsx           # React entrypoint
+  index.css           # Global styles and utility classes
 public/
-  Hiba_Shahid_Resume.pdf  # Resume file for download
-.env                    # Environment variables (API keys)
+  index.html
 ```
 
-## 🤖 AI Assistant (RAG Agent)
+## Getting Started
 
-The portfolio includes an intelligent AI assistant that can answer questions about:
-- Work experience and skills
-- Project details and live demos
-- Education background
-- Availability and contact information
-- Technical expertise
+```bash
+npm install
+npm run dev
+```
 
-**Technology**: Mistral AI (mistral-large-latest model) with comprehensive knowledge base
+Vite will print the local development URL (typically `http://localhost:5173`).
 
-## 🌐 Deploy to Vercel (Recommended)
+### Build and Preview
 
-1. **Push to GitHub**: Already done at https://github.com/Hiba-Shahid/My-Portfolio
-2. **Deploy to Vercel**: 
-   - Go to https://vercel.com → "New Project" → Import repo
-   - Framework: **Vite** (auto-detected)
-   - Add Environment Variable: `VITE_MISTRAL_API_KEY` = your Mistral API key
-   - Click **Deploy** — done!
+```bash
+npm run build
+npm run preview
+```
 
-## � Configuration
+## Environment Variables
 
-### Environment Variables
-Create a `.env` file in the root directory:
+Create a `.env` file in the project root if you want the chat assistant enabled:
+
 ```env
 VITE_MISTRAL_API_KEY=your_mistral_api_key_here
 ```
 
-### Resume Setup
-The resume file is located at `public/Hiba_Shahid_Resume.pdf`. To update:
-1. Replace the file in the `public/` folder
-2. The download links will automatically work
+If this key is missing, the assistant shows a configuration message instead of calling the API.
 
-### AI Customization
-To modify the AI assistant's knowledge base, edit the `KNOWLEDGE_BASE` constant in `src/components/RAGAgent.jsx`.
+## Content Customization
 
-## 🎨 Customization
+- Main page composition: `src/App.jsx`
+- About/skills content: `src/components/AboutSkills.jsx`
+- Projects data: `src/components/Projects.jsx`
+- Experience/contact/github section content: `src/components/Sections.jsx`
+- AI knowledge base and system prompt: `src/components/RAGAgent.jsx`
+- Theme variables and shared styles: `src/index.css`
 
-### Colors
-All colors are CSS variables in `src/index.css` under `:root {}`:
-- `--accent`: Primary accent color
-- `--accent2`: Secondary accent color  
-- `--accent3`: Tertiary accent color
+## Required Static Assets
 
-### Content
-- **Projects**: Update in `src/components/Projects.jsx`
-- **Experience**: Update in `src/components/Sections.jsx`
-- **Skills**: Update in `src/components/AboutSkills.jsx`
-- **Hero Section**: Update in `src/components/Hero.jsx`
+The current components reference these files:
 
-## 📱 Sections
+- `/hero.png` (used in `Hero.jsx`)
+- `/Hiba_Shahid_Resume.pdf` (used in multiple CTAs)
 
-- **Hero**: Introduction with animated stats and CTA buttons
-- **About & Skills**: Personal background and technical expertise
-- **Projects**: Showcase of work with live demos and GitHub links
-- **Experience**: Professional timeline with detailed achievements
-- **GitHub**: Repository statistics and quick access
-- **Contact**: Multiple contact methods and resume download
-- **AI Assistant**: Floating chat button for instant portfolio queries
+Add these files to `public/` to avoid runtime fallbacks/broken links.
 
-## 🛠️ Tech Stack
+## Notes
 
-- **Frontend**: React 18, Vite, CSS3
-- **AI**: Mistral AI (RAG implementation)
-- **Build Tool**: Vite
-- **Deployment**: Vercel (recommended)
-- **Version Control**: Git & GitHub
-
-## 📄 License
-
-This project is open source and available under the [MIT License](LICENSE).
-
----
-
-**Built with ❤️ by Hiba Shahid**
+- The AI assistant currently calls Mistral directly from the browser using `VITE_MISTRAL_API_KEY`.
+- For production hardening, consider moving AI requests to a backend endpoint to avoid exposing API keys in client bundles.
