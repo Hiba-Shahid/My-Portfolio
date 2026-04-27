@@ -225,6 +225,16 @@ export default function RAGAgent() {
   const [hovering, setHovering] = useState(false);
   const bottomRef = useRef(null);
   const inputRef = useRef(null);
+  
+  // Responsive detection
+  const [isMobile, setIsMobile] = useState(false);
+  
+  useEffect(() => {
+    const checkMobile = () => setIsMobile(window.innerWidth <= 640);
+    checkMobile();
+    window.addEventListener('resize', checkMobile);
+    return () => window.removeEventListener('resize', checkMobile);
+  }, []);
 
   useEffect(() => {
     if (open) {
@@ -297,8 +307,13 @@ export default function RAGAgent() {
           onClick={() => setOpen(o => !o)}
           aria-label="Open AI assistant"
           style={{
-            position: 'fixed', bottom: '2rem', right: '2rem', zIndex: 1000,
-            width: 54, height: 54, borderRadius: '50%',
+            position: 'fixed', 
+            bottom: isMobile ? '1rem' : '2rem', 
+            right: isMobile ? '1rem' : '2rem', 
+            zIndex: 1000,
+            width: isMobile ? 48 : 54, 
+            height: isMobile ? 48 : 54, 
+            borderRadius: '50%',
             background: open ? '#4c1d95' : 'linear-gradient(135deg, #7c3aed, #6d28d9)',
             border: '1px solid rgba(167,139,250,0.4)',
             cursor: 'pointer', display: 'flex', alignItems: 'center', justifyContent: 'center',
@@ -329,7 +344,7 @@ export default function RAGAgent() {
         </button>
 
         {/* Tooltip */}
-        {hovering && !open && (
+        {hovering && !open && !isMobile && (
           <div 
             style={{
               position: 'fixed', bottom: '4.5rem', right: '2rem', zIndex: 1001,
@@ -360,8 +375,13 @@ export default function RAGAgent() {
       {/* Chat window */}
       {open && (
         <div style={{
-          position: 'fixed', bottom: '6rem', right: '2rem', zIndex: 999,
-          width: 360, maxHeight: 520,
+          position: 'fixed', 
+          bottom: isMobile ? '1rem' : '6rem', 
+          right: isMobile ? '1rem' : '2rem', 
+          left: isMobile ? '1rem' : 'auto',
+          zIndex: 999,
+          width: isMobile ? 'auto' : 360, 
+          maxHeight: isMobile ? '70vh' : 520,
           background: '#13131c', border: '1px solid rgba(167,139,250,0.2)',
           borderRadius: 16, display: 'flex', flexDirection: 'column',
           boxShadow: '0 8px 40px rgba(0,0,0,0.6)',
@@ -456,14 +476,28 @@ export default function RAGAgent() {
 
           {/* Suggestions (only show on first message) */}
           {messages.length === 1 && (
-            <div style={{ padding: '0 12px 10px', display: 'flex', flexWrap: 'wrap', gap: '6px' }}>
+            <div style={{ 
+              padding: isMobile ? '0 8px 8px' : '0 12px 10px', 
+              display: 'flex', 
+              flexWrap: 'wrap', 
+              gap: isMobile ? '4px' : '6px',
+              maxHeight: isMobile ? '120px' : 'auto',
+              overflowY: isMobile ? 'auto' : 'visible'
+            }}>
               {SUGGESTED.map(s => (
                 <button key={s} onClick={() => send(s)} className="suggest-btn" style={{
-                  fontSize: '0.71rem', padding: '5px 10px',
-                  background: 'rgba(124,58,237,0.08)', border: '1px solid rgba(167,139,250,0.18)',
-                  borderRadius: 20, color: '#c4b5fd', cursor: 'pointer',
-                  fontFamily: 'DM Sans, sans-serif', transition: 'all 0.18s',
-                  textAlign: 'left', lineHeight: 1.4
+                  fontSize: isMobile ? '0.65rem' : '0.71rem', 
+                  padding: isMobile ? '4px 8px' : '5px 10px',
+                  background: 'rgba(124,58,237,0.08)', 
+                  border: '1px solid rgba(167,139,250,0.18)',
+                  borderRadius: 20, 
+                  color: '#c4b5fd', 
+                  cursor: 'pointer',
+                  fontFamily: 'DM Sans, sans-serif', 
+                  transition: 'all 0.18s',
+                  textAlign: 'left', 
+                  lineHeight: 1.4,
+                  flex: isMobile ? '1 1 calc(50% - 2px)' : 'none'
                 }}>{s}</button>
               ))}
             </div>
@@ -471,7 +505,8 @@ export default function RAGAgent() {
 
           {/* Input */}
           <div style={{
-            padding: '10px 12px 12px', borderTop: '1px solid rgba(255,255,255,0.07)',
+            padding: isMobile ? '8px 10px 10px' : '10px 12px 12px', 
+            borderTop: '1px solid rgba(255,255,255,0.07)',
             display: 'flex', gap: '8px', alignItems: 'flex-end', flexShrink: 0,
           }}>
             <textarea
@@ -484,9 +519,14 @@ export default function RAGAgent() {
               className="chat-input"
               style={{
                 flex: 1, background: '#1e1e2e', border: '1px solid rgba(255,255,255,0.1)',
-                borderRadius: 10, padding: '9px 12px', color: '#f0eeff',
-                fontSize: '0.84rem', fontFamily: 'DM Sans, sans-serif',
-                resize: 'none', lineHeight: 1.5, maxHeight: 90, overflowY: 'auto',
+                borderRadius: isMobile ? 8 : 10, 
+                padding: isMobile ? '7px 10px' : '9px 12px', 
+                color: '#f0eeff',
+                fontSize: isMobile ? '0.8rem' : '0.84rem', 
+                fontFamily: 'DM Sans, sans-serif',
+                resize: 'none', lineHeight: 1.5, 
+                maxHeight: isMobile ? 70 : 90, 
+                overflowY: 'auto',
                 transition: 'border-color 0.2s',
               }}
               onInput={e => {
@@ -498,7 +538,10 @@ export default function RAGAgent() {
               onClick={() => send()}
               disabled={!input.trim() || loading}
               style={{
-                width: 36, height: 36, borderRadius: 9, flexShrink: 0,
+                width: isMobile ? 32 : 36, 
+                height: isMobile ? 32 : 36, 
+                borderRadius: isMobile ? 8 : 9, 
+                flexShrink: 0,
                 background: input.trim() && !loading ? '#7c3aed' : '#2a2a3a',
                 border: 'none', cursor: input.trim() && !loading ? 'pointer' : 'not-allowed',
                 display: 'flex', alignItems: 'center', justifyContent: 'center',
