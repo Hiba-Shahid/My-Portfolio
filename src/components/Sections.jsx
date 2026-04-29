@@ -200,10 +200,10 @@ export function Contact() {
 
       // Send email to you only (testing)
       const result = await emailjs.send(
-        'service_uk29ive', // EmailJS service ID
-        'template_d25ciyg', // EmailJS template ID (to you)
+        import.meta.env.VITE_EMAILJS_SERVICE_ID,
+        import.meta.env.VITE_EMAILJS_TEMPLATE_ID,
         templateParams,
-        'nQj7NhRtWEz2cP5xN' // EmailJS public key
+        import.meta.env.VITE_EMAILJS_PUBLIC_KEY
       );
 
       console.log('Email result:', result);
