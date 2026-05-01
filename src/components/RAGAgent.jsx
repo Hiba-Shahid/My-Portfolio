@@ -376,12 +376,12 @@ export default function RAGAgent() {
       {open && (
         <div style={{
           position: 'fixed', 
-          bottom: isMobile ? '1rem' : '6rem', 
-          right: isMobile ? '1rem' : '2rem', 
-          left: isMobile ? '1rem' : 'auto',
+          bottom: '6rem', 
+          right: '2rem', 
+          left: 'auto',
           zIndex: 999,
-          width: isMobile ? 'auto' : 360, 
-          maxHeight: isMobile ? '70vh' : 520,
+          width: 420, 
+          maxHeight: 600,
           background: '#13131c', border: '1px solid rgba(167,139,250,0.2)',
           borderRadius: 16, display: 'flex', flexDirection: 'column',
           boxShadow: '0 8px 40px rgba(0,0,0,0.6)',

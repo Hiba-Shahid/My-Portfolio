@@ -111,6 +111,7 @@ function ProjectCard({ p }) {
 
   return (
     <div
+      className="project-card"
       onMouseEnter={() => setHovered(true)}
       onMouseLeave={() => setHovered(false)}
       style={{
@@ -141,7 +142,7 @@ function ProjectCard({ p }) {
       <div style={{ padding: '1.3rem', flex: 1, display: 'flex', flexDirection: 'column' }}>
         <div style={{ fontFamily: 'Syne, sans-serif', fontSize: '0.97rem', fontWeight: 700, marginBottom: '0.45rem' }}>{p.name}</div>
         <p style={{ fontSize: '0.83rem', color: 'var(--muted)', lineHeight: 1.7, flex: 1 }}>{p.desc}</p>
-        <div style={{ display: 'flex', flexWrap: 'wrap', gap: '0.3rem', marginTop: '0.9rem' }}>
+        <div className="tech-stack" style={{ display: 'flex', flexWrap: 'wrap', gap: '0.3rem', marginTop: '0.9rem' }}>
           {p.stack.map(t => (
             <span key={t} style={{
               fontSize: '0.68rem', padding: '0.18rem 0.45rem',
@@ -150,7 +151,7 @@ function ProjectCard({ p }) {
             }}>{t}</span>
           ))}
         </div>
-        <div style={{ display: 'flex', gap: '0.6rem', marginTop: '1rem' }}>
+        <div className="links" style={{ display: 'flex', gap: '0.6rem', marginTop: '1rem' }}>
           {p.github && (
             <a href={p.github} target="_blank" rel="noreferrer" style={{
               display: 'inline-flex', alignItems: 'center', gap: '0.3rem',
@@ -185,7 +186,7 @@ export default function Projects() {
   const isMobile = window.innerWidth <= 768;
 
   return (
-    <section id="projects" style={{ padding: isMobile ? '4rem 1.5rem' : '6rem 4rem', maxWidth: 1200, margin: '0 auto' }}>
+    <section id="projects" style={{ padding: '6rem 4rem', maxWidth: 1200, margin: '0 auto' }}>
       <p className="section-label">Work</p>
       <h2 className="section-title">Projects</h2>
 
@@ -201,7 +202,7 @@ export default function Projects() {
         ))}
       </div>
 
-      <div style={{ display: 'grid', gridTemplateColumns: isMobile ? '1fr' : 'repeat(auto-fill, minmax(320px, 1fr))', gap: isMobile ? '1rem' : '1.3rem' }}>
+      <div className="projects-grid" style={{ display: 'grid', gridTemplateColumns: 'repeat(auto-fill, minmax(320px, 1fr))', gap: '1.3rem' }}>
         {filtered.map(p => <ProjectCard key={p.name} p={p} />)}
       </div>
     </section>

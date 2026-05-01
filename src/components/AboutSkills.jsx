@@ -4,24 +4,23 @@ const techs = ['React.js','Django','Next.js','Python','TailwindCSS','PostgreSQL'
 const highlighted = ['React.js','Django','Python','PostgreSQL','YOLO','TypeScript','REST APIs'];
 
 export function TechStrip() {
-  const isMobile = window.innerWidth <= 768;
   const doubled = [...techs, ...techs];
   
   return (
     <div style={{
       background: 'var(--bg2)', borderTop: '1px solid var(--border)',
-      borderBottom: '1px solid var(--border)', padding: isMobile ? '0.7rem 0' : '0.9rem 0', overflow: 'hidden'
+      borderBottom: '1px solid var(--border)', padding: '0.8rem 0', overflow: 'hidden'
     }}>
       <div style={{
-        display: 'flex', gap: isMobile ? '1rem' : '2rem', alignItems: 'center',
+        display: 'flex', gap: '1.5rem', alignItems: 'center',
         animation: 'scrollLeft 28s linear infinite', whiteSpace: 'nowrap',
         width: 'max-content'
       }}>
         {doubled.map((t, i) => (
           <span key={i} style={{
-            fontSize: isMobile ? '0.65rem' : '0.75rem', letterSpacing: '0.08em', textTransform: 'uppercase',
-            fontWeight: 500, padding: isMobile ? '0.18rem 0.6rem' : '0.22rem 0.9rem',
-            border: '1px solid var(--border)', borderRadius: 4,
+            fontSize: '0.75rem', letterSpacing: '0.08em', textTransform: 'uppercase',
+            fontWeight: 500, padding: '0.25rem 0.8rem',
+            border: '1px solid var(--border)', borderRadius: 6,
             background: 'var(--bg3)',
             color: highlighted.includes(t) ? 'var(--accent3)' : 'var(--muted2)',
             borderColor: highlighted.includes(t) ? 'rgba(167,139,250,0.25)' : 'var(--border)',
@@ -43,8 +42,8 @@ export function About() {
   const isMobile = window.innerWidth <= 768;
   
   return (
-    <section id="about" style={{ padding: isMobile ? '4rem 1.5rem' : '6rem 4rem', maxWidth: 1200, margin: '0 auto' }}>
-      <div style={{ display: 'grid', gridTemplateColumns: isMobile ? '1fr' : '1fr 1fr', gap: isMobile ? '2.5rem' : '4rem', alignItems: 'start' }}>
+    <section id="about" style={{ padding: '6rem 4rem', maxWidth: 1200, margin: '0 auto' }}>
+      <div className="about-grid" style={{ display: 'grid', gridTemplateColumns: '1fr 1fr', gap: '4rem', alignItems: 'start' }}>
         <div>
           <p className="section-label">About Me</p>
           <h2 className="section-title">Developer who thinks<br />like an AI researcher.</h2>
@@ -63,16 +62,12 @@ export function About() {
           </div>
         </div>
         <div style={{ display: 'flex', flexDirection: 'column', gap: '0.9rem' }}>
-          {aboutCards.map(c => (
-            <div key={c.title} style={{
-              background: 'var(--card)', border: '1px solid var(--border)',
-              borderRadius: 12, padding: isMobile ? '0.9rem 1rem' : '1.1rem 1.4rem',
-              display: 'flex', alignItems: 'flex-start', gap: '1rem',
-              transition: 'border-color 0.2s', cursor: 'default'
-            }}
-              onMouseEnter={e => e.currentTarget.style.borderColor = 'var(--border2)'}
-              onMouseLeave={e => e.currentTarget.style.borderColor = 'var(--border)'}
-            >
+          {aboutCards.map((c, i) => (
+            <div key={i} className="about-card" style={{
+              background: c.bg, border: '1px solid rgba(255,255,255,0.08)',
+              borderRadius: 12, padding: '1.2rem 1.4rem', marginBottom: '1.1rem',
+              display: 'flex', alignItems: 'flex-start', gap: '0.9rem'
+            }}>
               <div style={{
                 width: 34, height: 34, borderRadius: 8, flexShrink: 0,
                 background: c.bg, display: 'flex', alignItems: 'center',
@@ -104,13 +99,13 @@ export function Skills() {
   
   return (
     <section id="skills" style={{
-      padding: isMobile ? '3rem 1.5rem' : '4rem', background: 'var(--bg2)',
+      padding: '4rem', background: 'var(--bg2)',
       borderTop: '1px solid var(--border)', borderBottom: '1px solid var(--border)'
     }}>
       <div style={{ maxWidth: 1200, margin: '0 auto' }}>
         <p className="section-label">Core Skills</p>
         <h2 className="section-title" style={{ marginBottom: '1.5rem' }}>Tech Stack</h2>
-        <div style={{ display: 'grid', gridTemplateColumns: isMobile ? '1fr' : 'repeat(auto-fit, minmax(280px,1fr))', gap: '1rem' }}>
+        <div className="skills-grid" style={{ display: 'grid', gridTemplateColumns: 'repeat(auto-fit, minmax(280px, 1fr))', gap: '1rem' }}>
           {skillGroups.map(g => (
             <div key={g.label} style={{
               background: 'var(--card)', border: '1px solid var(--border)',

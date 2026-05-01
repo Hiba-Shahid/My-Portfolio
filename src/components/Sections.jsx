@@ -265,17 +265,17 @@ export function Contact() {
 
   return (
     <section id="contact" style={{
-      padding: isMobile ? '4rem 1.5rem' : '6rem 4rem',
+      padding: '6rem 3rem',
       background: 'var(--bg2)', borderTop: '1px solid var(--border)'
     }}>
       <div style={{ maxWidth: 1200, margin: '0 auto' }}>
         <p className="section-label">Get In Touch</p>
         <h2 className="section-title">Let's work together.</h2>
 
-        <div style={{
+        <div className="contact-grid" style={{
           display: 'grid',
-          gridTemplateColumns: isMobile ? '1fr' : '1fr 1.1fr',
-          gap: isMobile ? '2.5rem' : '3.5rem',
+          gridTemplateColumns: '1fr 1.1fr',
+          gap: '3.5rem',
           alignItems: 'start'
         }}>
 
