@@ -167,6 +167,22 @@ ul { list-style: none; }
   }
 }
 
+/* Medium screens (laptops) */
+@media (min-width: 1025px) and (max-width: 1399px) {
+  #hero .fade-up > div:first-child {
+    margin-left: 1.5rem !important;
+    padding-left: 1rem !important;
+  }
+}
+
+/* Large laptops and small desktops */
+@media (min-width: 1400px) and (max-width: 1500px) {
+  #hero .fade-up > div:first-child {
+    margin-left: 1rem !important;
+    padding-left: 1rem !important;
+  }
+}
+
 /* Ultra-wide screens optimization */
 @media (min-width: 1920px) {
   body {
@@ -226,6 +242,12 @@ ul { list-style: none; }
   
   #contact {
     padding: 5rem 2rem !important;
+  }
+  
+  /* Hero text left margin for tablets */
+  #hero .fade-up > div:first-child {
+    margin-left: 2rem !important;
+    padding-left: 1rem !important;
   }
 }
 
@@ -328,6 +350,11 @@ ul { list-style: none; }
   .project-card .links a {
     padding: 0.4rem 0.8rem !important;
     font-size: 0.75rem !important;
+  }
+  
+  /* Hero text left margin */
+  #hero .fade-up > div:first-child {
+    margin-left: 1rem !important;
   }
 }
 
